@@ -12,7 +12,7 @@ using IdeaManMVC.Models;
 namespace IdeaManMVC.Controllers
 {
     [Authorize]
-    public class IdeaModelsController : Controller
+    public class IdeaEntryController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -29,12 +29,12 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaModel ideaModel = await db.IdeaModels.FindAsync(id);
-            if (ideaModel == null)
+            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
+            if (ideaEntry == null)
             {
                 return HttpNotFound();
             }
-            return View(ideaModel);
+            return View(ideaEntry);
         }
 
         // GET: IdeaModels/Create
@@ -48,16 +48,16 @@ namespace IdeaManMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaModel ideaModel)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaEntry ideaEntry)
         {
             if (ModelState.IsValid)
             {
-                db.IdeaModels.Add(ideaModel);
+                db.IdeaModels.Add(ideaEntry);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(ideaModel);
+            return View(ideaEntry);
         }
 
         // GET: IdeaModels/Edit/5
@@ -67,12 +67,12 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaModel ideaModel = await db.IdeaModels.FindAsync(id);
-            if (ideaModel == null)
+            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
+            if (ideaEntry == null)
             {
                 return HttpNotFound();
             }
-            return View(ideaModel);
+            return View(ideaEntry);
         }
 
         // POST: IdeaModels/Edit/5
@@ -80,15 +80,15 @@ namespace IdeaManMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaModel ideaModel)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaEntry ideaEntry)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ideaModel).State = EntityState.Modified;
+                db.Entry(ideaEntry).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(ideaModel);
+            return View(ideaEntry);
         }
 
         // GET: IdeaModels/Delete/5
@@ -98,12 +98,12 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaModel ideaModel = await db.IdeaModels.FindAsync(id);
-            if (ideaModel == null)
+            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
+            if (ideaEntry == null)
             {
                 return HttpNotFound();
             }
-            return View(ideaModel);
+            return View(ideaEntry);
         }
 
         // POST: IdeaModels/Delete/5
@@ -111,8 +111,8 @@ namespace IdeaManMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            IdeaModel ideaModel = await db.IdeaModels.FindAsync(id);
-            db.IdeaModels.Remove(ideaModel);
+            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
+            db.IdeaModels.Remove(ideaEntry);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

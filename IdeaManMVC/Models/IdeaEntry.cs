@@ -5,7 +5,7 @@ using System.Web;
 
 namespace IdeaManMVC.Models
 {
-    public class IdeaModel
+    public class IdeaEntry
     {
         public int Id { get; set; }
         public string Title { get; set; }

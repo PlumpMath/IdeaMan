@@ -169,7 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IdeaModelsController.cs" />
+    <Compile Include="Controllers\IdeaEntryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Extensions\Helpers.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,9 +179,13 @@
     <Compile Include="Migrations\201511221425122_Ideas.Designer.cs">
       <DependentUpon>201511221425122_Ideas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511222118187_Renamed ideas.cs" />
+    <Compile Include="Migrations\201511222118187_Renamed ideas.Designer.cs">
+      <DependentUpon>201511222118187_Renamed ideas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdeaModel.cs" />
+    <Compile Include="Models\IdeaEntry.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -242,11 +246,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\IdeaModels\Create.cshtml" />
-    <Content Include="Views\IdeaModels\Delete.cshtml" />
-    <Content Include="Views\IdeaModels\Details.cshtml" />
-    <Content Include="Views\IdeaModels\Edit.cshtml" />
-    <Content Include="Views\IdeaModels\Index.cshtml" />
+    <Content Include="Views\IdeaEntry\Create.cshtml" />
+    <Content Include="Views\IdeaEntry\Delete.cshtml" />
+    <Content Include="Views\IdeaEntry\Details.cshtml" />
+    <Content Include="Views\IdeaEntry\Edit.cshtml" />
+    <Content Include="Views\IdeaEntry\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -262,6 +266,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511221425122_Ideas.resx">
       <DependentUpon>201511221425122_Ideas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511222118187_Renamed ideas.resx">
+      <DependentUpon>201511222118187_Renamed ideas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

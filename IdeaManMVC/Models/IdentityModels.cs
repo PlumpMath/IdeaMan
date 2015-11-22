@@ -12,7 +12,7 @@ namespace IdeaManMVC.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<IdeaModel> CreatedIdeas { get; set; }
+        public List<IdeaEntry> CreatedIdeas { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -35,6 +35,6 @@ namespace IdeaManMVC.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<IdeaManMVC.Models.IdeaModel> IdeaModels { get; set; }
+        public System.Data.Entity.DbSet<IdeaManMVC.Models.IdeaEntry> IdeaModels { get; set; }
     }
 }
