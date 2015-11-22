@@ -1,9 +1,9 @@
-namespace IdeaManMVC.Migrations
+namespace IdeaManMVC.Migrations_Application
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Ideas : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -66,7 +66,7 @@ namespace IdeaManMVC.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.IdeaModels",
+                "dbo.IdeaEntries",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -97,18 +97,18 @@ namespace IdeaManMVC.Migrations
         {
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.IdeaModels", "Creator_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.IdeaEntries", "Creator_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.IdeaModels", new[] { "Creator_Id" });
+            DropIndex("dbo.IdeaEntries", new[] { "Creator_Id" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropTable("dbo.AspNetUserLogins");
-            DropTable("dbo.IdeaModels");
+            DropTable("dbo.IdeaEntries");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");

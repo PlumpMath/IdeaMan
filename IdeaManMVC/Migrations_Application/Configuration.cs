@@ -2,7 +2,7 @@ using IdeaManMVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace IdeaManMVC.Migrations
+namespace IdeaManMVC.Migrations_Application
 {
     using System;
     using System.Data.Entity;
@@ -14,6 +14,7 @@ namespace IdeaManMVC.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            MigrationsDirectory = @"Migrations_Application";
         }
 
         protected override void Seed(IdeaManMVC.Models.ApplicationDbContext context)
@@ -22,7 +23,7 @@ namespace IdeaManMVC.Migrations
             var manager = new UserManager<ApplicationUser>(store);
             manager.Create(new ApplicationUser()
             {
-                
+
                 FirstName = "Admin",
                 LastName = "Adminovich",
                 UserName = "admin@agile.com",

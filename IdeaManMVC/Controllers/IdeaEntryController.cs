@@ -8,18 +8,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IdeaManMVC.Models;
+using IdeaManMVC.Models.Ideas;
 
 namespace IdeaManMVC.Controllers
 {
     [Authorize]
     public class IdeaEntryController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IdeasDbContext db = new IdeasDbContext();
 
         // GET: IdeaModels
         public async Task<ActionResult> Index()
         {
-            return View(await db.IdeaModels.ToListAsync());
+            return View(await db.Ideas.ToListAsync());
         }
 
         // GET: IdeaModels/Details/5
@@ -29,7 +30,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
+            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
@@ -52,7 +53,7 @@ namespace IdeaManMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.IdeaModels.Add(ideaEntry);
+                db.Ideas.Add(ideaEntry);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -67,7 +68,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
+            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
@@ -98,7 +99,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
+            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
@@ -111,8 +112,8 @@ namespace IdeaManMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            IdeaEntry ideaEntry = await db.IdeaModels.FindAsync(id);
-            db.IdeaModels.Remove(ideaEntry);
+            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
+            db.Ideas.Remove(ideaEntry);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

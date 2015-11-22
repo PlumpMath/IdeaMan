@@ -35,6 +35,6 @@ namespace IdeaManMVC.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<IdeaManMVC.Models.IdeaEntry> IdeaModels { get; set; }
+        
     }
 }
