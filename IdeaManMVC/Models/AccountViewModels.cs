@@ -65,6 +65,16 @@ namespace IdeaManMVC.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name="First Name")]
+        [StringLength(100, ErrorMessage = "Woops! The {0} cannot be longer than {2}.", MinimumLength = 1)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        [StringLength(100, ErrorMessage = "Woops! The {0} cannot be longer than {2}.", MinimumLength = 1)]
+        public string LastName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

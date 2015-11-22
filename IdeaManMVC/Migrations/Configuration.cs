@@ -1,3 +1,7 @@
+using IdeaManMVC.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace IdeaManMVC.Migrations
 {
     using System;
@@ -14,18 +18,16 @@ namespace IdeaManMVC.Migrations
 
         protected override void Seed(IdeaManMVC.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var store = new UserStore<ApplicationUser>(context);
+            var manager = new UserManager<ApplicationUser>(store);
+            manager.Create(new ApplicationUser()
+            {
+                
+                FirstName = "Admin",
+                LastName = "Adminovich",
+                UserName = "admin@agile.com",
+                Email = "admin@agile.com",
+            }, "123456");
         }
     }
 }

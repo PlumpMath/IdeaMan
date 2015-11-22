@@ -7,11 +7,10 @@ namespace IdeaManMVC.Models
 {
     public class IdeaModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string FullText { get; set; }
-        public ApplicationUser Creator { get; set; }
-        public ApplicationUser Owner { get; set; }
-        
+        public ApplicationUser Creator { get; set; }   
     }
 }
