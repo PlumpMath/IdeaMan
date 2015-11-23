@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IdeaManMVC.Models.IdeaEntry>
+﻿@model List<IdeaManMVC.Models.Ideas.IdeaShortViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -12,19 +12,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            Creator
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ShortDescription)
+            Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FullText)
+            Short Description
+        </th>
+        <th>
+            Full Text
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatorName)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
@@ -35,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.FullText)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
         </td>
     </tr>
 }

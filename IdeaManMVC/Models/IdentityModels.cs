@@ -12,21 +12,19 @@ namespace IdeaManMVC.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<IdeaEntry> CreatedIdeas { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            manager.AddClaim(userIdentity.GetUserId(), new Claim("iDea:FullName", FirstName + " " + LastName));
-            // Add custom user claims here
+            manager.AddClaim(userIdentity.GetUserId(), new Claim("iDea:FullName", FullName));   
             return userIdentity;
         }
+        public string FullName => FirstName + " " + LastName;
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
         }
 
@@ -35,6 +33,8 @@ namespace IdeaManMVC.Models
             return new ApplicationDbContext();
         }
 
-        
+        public DbSet<ApplicationUser> AppUsers { get; set; }
+        public DbSet<IdeaEntry> Ideas { get; set; }
+
     }
 }

@@ -9,18 +9,37 @@ using System.Web;
 using System.Web.Mvc;
 using IdeaManMVC.Models;
 using IdeaManMVC.Models.Ideas;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace IdeaManMVC.Controllers
 {
     [Authorize]
     public class IdeaEntryController : Controller
     {
-        private IdeasDbContext db = new IdeasDbContext();
+        private ApplicationDbContext appDb { get; set; }
+        private UserManager<ApplicationUser> userManager { get; set; }
 
+        public IdeaEntryController():base()
+        {
+            appDb = new ApplicationDbContext();
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
+        }
         // GET: IdeaModels
         public async Task<ActionResult> Index()
         {
-            return View(await db.Ideas.ToListAsync());
+            var results = from idea in appDb.Ideas
+                select new IdeaShortViewModel()
+                {
+                    Id = idea.Id,
+                    ShortDescription = idea.ShortDescription,
+                    FullText = idea.FullText,
+                    Title = idea.Title,
+                    CreatorName = idea.Creator.FirstName + " " + idea.Creator.LastName
+                };
+
+            return View(await results.ToListAsync());
         }
 
         // GET: IdeaModels/Details/5
@@ -30,7 +49,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
+            IdeaEntry ideaEntry = await appDb.Ideas.FindAsync(id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
@@ -53,8 +72,14 @@ namespace IdeaManMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Ideas.Add(ideaEntry);
-                await db.SaveChangesAsync();
+                var user = userManager.FindById(User.Identity.GetUserId());
+                if (user == null)
+                {
+                    return View(ideaEntry);
+                }
+                ideaEntry.Creator = user;
+                appDb.Ideas.Add(ideaEntry);
+                await appDb.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -68,7 +93,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
+            IdeaEntry ideaEntry = await appDb.Ideas.FindAsync(id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
@@ -85,8 +110,8 @@ namespace IdeaManMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ideaEntry).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                appDb.Entry(ideaEntry).State = EntityState.Modified;
+                await appDb.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(ideaEntry);
@@ -99,7 +124,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
+            IdeaEntry ideaEntry = await appDb.Ideas.FindAsync(id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
@@ -112,9 +137,9 @@ namespace IdeaManMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            IdeaEntry ideaEntry = await db.Ideas.FindAsync(id);
-            db.Ideas.Remove(ideaEntry);
-            await db.SaveChangesAsync();
+            IdeaEntry ideaEntry = await appDb.Ideas.FindAsync(id);
+            appDb.Ideas.Remove(ideaEntry);
+            await appDb.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -122,7 +147,7 @@ namespace IdeaManMVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                appDb.Dispose();
             }
             base.Dispose(disposing);
         }

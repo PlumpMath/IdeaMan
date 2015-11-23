@@ -1,19 +1,18 @@
-namespace IdeaManMVC.Migrations_Ideas
+namespace IdeaManMVC.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<IdeaManMVC.Models.Ideas.IdeasDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<IdeaManMVC.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"Migrations_Ideas";
         }
 
-        protected override void Seed(IdeaManMVC.Models.Ideas.IdeasDbContext context)
+        protected override void Seed(IdeaManMVC.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
