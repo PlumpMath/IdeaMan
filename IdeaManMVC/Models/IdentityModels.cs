@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -12,13 +14,14 @@ namespace IdeaManMVC.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName => FirstName + " " + LastName;
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            manager.AddClaim(userIdentity.GetUserId(), new Claim("iDea:FullName", FullName));   
+            manager.AddClaim(userIdentity.GetUserId(), new Claim("iDea:FullName", FullName));
             return userIdentity;
         }
-        public string FullName => FirstName + " " + LastName;
     }
 
     public class ApplicationDbContext : IdentityDbContext
@@ -28,13 +31,36 @@ namespace IdeaManMVC.Models
         {
         }
 
+        public DbSet<ApplicationUser> AppUsers { get; set; }
+        public DbSet<IdeaEntry> Ideas { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        public DbSet<ApplicationUser> AppUsers { get; set; }
-        public DbSet<IdeaEntry> Ideas { get; set; }
+        public override int SaveChanges()
+        {
+            var entities =
+                ChangeTracker.Entries()
+                    .Where(
+                        x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
+            var user = HttpContext.Current != null && HttpContext.Current.User != null
+                ? HttpContext.Current.User.Identity.Name
+                : "Anonymous";
+
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Added)
+                {
+                    ((BaseEntity) entity.Entity).DateCreated = DateTime.Now;
+                    ((BaseEntity) entity.Entity).UserCreated = user;
+                }
+                ((BaseEntity) entity.Entity).DateModified = DateTime.Now;
+                ((BaseEntity) entity.Entity).UserModified = user;
+            }
+            return base.SaveChanges();
+        }
     }
 }

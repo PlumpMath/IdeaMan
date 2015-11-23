@@ -83,13 +83,14 @@ namespace IdeaManMVC.Migrations
             foreach (var ideaStr in ideasList)
             {
                 var user = context.AppUsers.Local.Skip(rand.Next(0, maxLength - 1)).FirstOrDefault();
+                var newDate = DateTime.Now.Subtract(TimeSpan.FromDays(counter));
                 context.Ideas.Add(new IdeaEntry()
                 {
                     Creator = user,
                     Title = ideaTitles[counter],
                     ShortDescription = ideaStr,
-                    FullText = ideaStr+ideaStr+ideaStr
-                    
+                    FullText = ideaStr+ideaStr+ideaStr,
+                    DateCreated = newDate
                 });
                 counter++;
             }

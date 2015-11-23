@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using IdeaManMVC.Models;
 using IdeaManMVC.Models.Ideas;
 using Microsoft.Ajax.Utilities;
@@ -29,8 +30,8 @@ namespace IdeaManMVC.Controllers
         // GET: IdeaModels
         public async Task<ActionResult> Index()
         {
-            var results = from idea in appDb.Ideas
-                select new IdeaShortViewModel()
+            var results = appDb.Ideas.OrderBy(idea=>idea.DateCreated)
+                .Select(idea=>new IdeaShortViewModel()
                 {
                     Id = idea.Id,
                     ShortDescription = idea.ShortDescription,
@@ -38,8 +39,8 @@ namespace IdeaManMVC.Controllers
                     Title = idea.Title,
                     CreatorId = idea.Creator.Id,
                     CreatorName = idea.Creator.FirstName + " " + idea.Creator.LastName,
-                    
-                };
+                    CreationDate = idea.DateCreated ?? DateTime.MinValue
+                });
 
             return View(await results.ToListAsync());
         }
@@ -90,6 +91,7 @@ namespace IdeaManMVC.Controllers
                 await appDb.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            
 
             return View(ideaEntry);
         }

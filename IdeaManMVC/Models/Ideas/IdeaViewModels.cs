@@ -25,5 +25,6 @@ namespace IdeaManMVC.Models.Ideas
 
         public string CreatorId { get; set; }
         public string CreatorName { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }
