@@ -12,6 +12,7 @@
             {
                 @Html.AntiForgeryToken()
                 <h4>Use a local account to log in.</h4>
+                <div>Default login is admin@@agile.com with password 123456</div>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">

@@ -1,4 +1,5 @@
-﻿@model IdeaManMVC.Models.IdeaEntry
+﻿@using Microsoft.AspNet.Identity
+@model IdeaManMVC.Models.Ideas.IdeaShortViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -37,6 +38,10 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    
+    @if (Model.CreatorId == User.Identity.GetUserId())
+    {
+        @Html.ActionLink("Edit", "Edit", new {id = Model.Id})
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

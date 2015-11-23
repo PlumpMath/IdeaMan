@@ -23,6 +23,7 @@ namespace IdeaManMVC.Models.Ideas
         [MinLength(100, ErrorMessage = "Minimum length for {0} is {2}")]
         public string FullText { get; set; }
 
+        public string CreatorId { get; set; }
         public string CreatorName { get; set; }
     }
 }

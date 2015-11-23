@@ -36,7 +36,9 @@ namespace IdeaManMVC.Controllers
                     ShortDescription = idea.ShortDescription,
                     FullText = idea.FullText,
                     Title = idea.Title,
-                    CreatorName = idea.Creator.FirstName + " " + idea.Creator.LastName
+                    CreatorId = idea.Creator.Id,
+                    CreatorName = idea.Creator.FirstName + " " + idea.Creator.LastName,
+                    
                 };
 
             return View(await results.ToListAsync());
@@ -49,12 +51,18 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await appDb.Ideas.FindAsync(id);
-            if (ideaEntry == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ideaEntry);
+            var ideaEntry = appDb.Ideas.Where(idea=>idea.Id == id)
+                .Select(idea => new IdeaShortViewModel()
+                {
+                    Id = idea.Id,
+                    ShortDescription = idea.ShortDescription,
+                    FullText = idea.FullText,
+                    Title = idea.Title,
+                    CreatorId = idea.Creator.Id,
+                    CreatorName = idea.Creator.FirstName + " " + idea.Creator.LastName,
+
+                }).FirstOrDefaultAsync();
+            return View(await ideaEntry);
         }
 
         // GET: IdeaModels/Create
@@ -93,10 +101,15 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry = await appDb.Ideas.FindAsync(id);
+            IdeaEntry ideaEntry =  appDb.Ideas.First(o => o.Id == id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
+            }
+            if (ideaEntry.Creator.Id != User.Identity.GetUserId())
+            {
+                ViewBag.Error = "Permission denied. This idea does not belong to you";
+                return Redirect(Request.UrlReferrer.ToString());
             }
             return View(ideaEntry);
         }

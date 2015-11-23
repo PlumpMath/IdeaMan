@@ -1,5 +1,9 @@
 ﻿@model List<IdeaManMVC.Models.Ideas.IdeaShortViewModel>
-
+<style>
+    .list-group li {
+         list-style: none;
+     }
+</style>
 @{
     ViewBag.Title = "Index";
 }
@@ -9,43 +13,26 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            Creator
-        </th>
-        <th>
-            Title
-        </th>
-        <th>
-            Short Description
-        </th>
-        <th>
-            Full Text
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatorName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShortDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullText)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
-        </td>
-    </tr>
-}
+<div class="container">
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @Html.ActionLink("Read more", "Details", new { id = item.Id, }, new { @class = "btn pull-right" })
+                        <h4 class="panel-title">@Html.DisplayFor(m => item.Title)</h4>
+                        <div class="panel-info">
+                            <hr/>
+                            <p>@Html.DisplayFor(m => item.ShortDescription)</p>
+                            @Html.DisplayFor(m => item.CreatorName, new {@class = "pull-right"})
 
-</table>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
