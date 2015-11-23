@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
@@ -39,7 +40,7 @@ namespace IdeaManMVC.Models
             return new ApplicationDbContext();
         }
 
-        public override int SaveChanges()
+        protected void SettingsSavingShared()
         {
             var entities =
                 ChangeTracker.Entries()
@@ -54,13 +55,23 @@ namespace IdeaManMVC.Models
             {
                 if (entity.State == EntityState.Added)
                 {
-                    ((BaseEntity) entity.Entity).DateCreated = DateTime.Now;
-                    ((BaseEntity) entity.Entity).UserCreated = user;
+                    ((BaseEntity)entity.Entity).DateCreated = DateTime.Now;
+                    ((BaseEntity)entity.Entity).UserCreated = user;
                 }
-                ((BaseEntity) entity.Entity).DateModified = DateTime.Now;
-                ((BaseEntity) entity.Entity).UserModified = user;
+                ((BaseEntity)entity.Entity).DateModified = DateTime.Now;
+                ((BaseEntity)entity.Entity).UserModified = user;
             }
+        }
+        public override int SaveChanges()
+        {
+            SettingsSavingShared();
             return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            SettingsSavingShared();
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

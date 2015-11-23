@@ -3,17 +3,22 @@
     .list-group li {
          list-style: none;
      }
+    .footer-padding {
+        padding-bottom: 25px;
+        margin-bottom: -25px;
+    }
 </style>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Ideas for Life";
 }
+<div class="text-center">
+    <h2 class="">@ViewBag.Title</h2>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+<hr/>
 <div class="container">
     <ul class="list-group">
         @foreach (var item in Model)
@@ -26,9 +31,14 @@
                         <div class="panel-info">
                             <hr/>
                             <p>@Html.DisplayFor(m => item.ShortDescription)</p>
-                            @Html.DisplayFor(m => item.CreatorName, new {@class = "pull-right"})
-                            @Html.DisplayFor(m => item.CreationDate)
-
+                            <div class="panel-footer footer-padding">
+                                <p style="float:left">
+                                    @Html.DisplayFor(m => item.CreatorName)
+                                </p>
+                                <p style="float:right">
+                                    @Html.DisplayFor(m => item.CreationDate)
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

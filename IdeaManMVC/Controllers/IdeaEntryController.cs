@@ -30,7 +30,7 @@ namespace IdeaManMVC.Controllers
         // GET: IdeaModels
         public async Task<ActionResult> Index()
         {
-            var results = appDb.Ideas.OrderBy(idea=>idea.DateCreated)
+            var results = appDb.Ideas.OrderByDescending(idea=>idea.DateCreated)
                 .Select(idea=>new IdeaShortViewModel()
                 {
                     Id = idea.Id,
