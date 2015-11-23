@@ -101,7 +101,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaEntry ideaEntry =  appDb.Ideas.First(o => o.Id == id);
+            IdeaEntry ideaEntry =  appDb.Ideas.FirstOrDefault(o => o.Id == id);
             if (ideaEntry == null)
             {
                 return HttpNotFound();
@@ -109,7 +109,7 @@ namespace IdeaManMVC.Controllers
             if (ideaEntry.Creator.Id != User.Identity.GetUserId())
             {
                 ViewBag.Error = "Permission denied. This idea does not belong to you";
-                return Redirect(Request.UrlReferrer.ToString());
+                return RedirectToAction("Details", new { @id = id });
             }
             return View(ideaEntry);
         }
