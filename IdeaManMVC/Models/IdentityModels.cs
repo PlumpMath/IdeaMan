@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using IdeaManMVC.Models.Ideas;
 
 namespace IdeaManMVC.Models
 {
@@ -34,6 +35,7 @@ namespace IdeaManMVC.Models
 
         public DbSet<ApplicationUser> AppUsers { get; set; }
         public DbSet<IdeaEntry> Ideas { get; set; }
+        public DbSet<Vote> Votes { get; set; }
 
         public static ApplicationDbContext Create()
         {

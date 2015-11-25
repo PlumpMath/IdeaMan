@@ -137,6 +137,26 @@ namespace IdeaManMVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [Authorize]
+        public JsonResult DoVote(int id)
+        {
+            var hasVote = appDb.Votes.Where(o => o.Idea.Id == id)
+                .Where(o=>o.User.Id == User.Identity.GetUserId())
+                .Any();
+            if(hasVote)
+            {
+                return Json(new { status = "error", message="You have already voted for this."}); 
+            }
+            appDb.Votes.Add(new Vote()
+            {
+                User = appDb.AppUsers.Find(User.Identity.GetUserId()),
+                Idea = appDb.Ideas.Find(id)
+            });
+            appDb.SaveChangesAsync();
+            return Json(new { status = "OK", message="Vote casted"});
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
