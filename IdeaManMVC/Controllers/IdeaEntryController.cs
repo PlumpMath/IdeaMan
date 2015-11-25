@@ -30,18 +30,7 @@ namespace IdeaManMVC.Controllers
         // GET: IdeaModels
         public async Task<ActionResult> Index()
         {
-            var results = appDb.Ideas.OrderByDescending(idea=>idea.DateCreated)
-                .Select(idea=>new IdeaShortViewModel()
-                {
-                    Id = idea.Id,
-                    ShortDescription = idea.ShortDescription,
-                    FullText = idea.FullText,
-                    Title = idea.Title,
-                    CreatorId = idea.Creator.Id,
-                    CreatorName = idea.Creator.FirstName + " " + idea.Creator.LastName,
-                    CreationDate = idea.DateCreated ?? DateTime.MinValue
-                });
-
+            var results = appDb.Ideas.OrderByDescending(idea => idea.DateCreated);
             return View(await results.ToListAsync());
         }
 
@@ -52,17 +41,7 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var ideaEntry = appDb.Ideas.Where(idea=>idea.Id == id)
-                .Select(idea => new IdeaShortViewModel()
-                {
-                    Id = idea.Id,
-                    ShortDescription = idea.ShortDescription,
-                    FullText = idea.FullText,
-                    Title = idea.Title,
-                    CreatorId = idea.Creator.Id,
-                    CreatorName = idea.Creator.FirstName + " " + idea.Creator.LastName,
-
-                }).FirstOrDefaultAsync();
+            var ideaEntry = appDb.Ideas.Where(idea=>idea.Id == id)?.FirstOrDefaultAsync();
             return View(await ideaEntry);
         }
 

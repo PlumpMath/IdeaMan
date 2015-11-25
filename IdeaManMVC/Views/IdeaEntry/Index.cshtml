@@ -1,4 +1,4 @@
-﻿@model List<IdeaManMVC.Models.Ideas.IdeaShortViewModel>
+﻿@model List<IdeaManMVC.Models.IdeaEntry>
 <style>
     .list-group li {
          list-style: none;
@@ -33,10 +33,10 @@
                             <p>@Html.DisplayFor(m => item.ShortDescription)</p>
                             <div class="panel-footer footer-padding">
                                 <p style="float:left">
-                                    @Html.DisplayFor(m => item.CreatorName)
+                                    @Html.DisplayFor(m => item.Creator.FullName)
                                 </p>
                                 <p style="float:right">
-                                    @Html.DisplayFor(m => item.CreationDate)
+                                    @Html.DisplayFor(m => item.UserCreated)
                                 </p>
                             </div>
                         </div>
