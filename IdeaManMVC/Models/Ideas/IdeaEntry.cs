@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using IdeaManMVC.Models.Ideas;
 using Microsoft.AspNet.Identity;
 
 namespace IdeaManMVC.Models
@@ -13,5 +14,6 @@ namespace IdeaManMVC.Models
         public string ShortDescription { get; set; }
         public string FullText { get; set; }
         public virtual ApplicationUser Creator { get; set; }
+        public List<Vote> Votes { get; set; }
     }
 }

@@ -27,14 +27,16 @@ namespace IdeaManMVC.Controllers
             appDb = new ApplicationDbContext();
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
         }
-        // GET: IdeaModels
+        // GET: IdeaEntry
         public async Task<ActionResult> Index()
         {
-            var results = appDb.Ideas.OrderByDescending(idea => idea.DateCreated);
+            var results = appDb.Ideas.OrderByDescending(idea => idea.DateCreated)
+                .Include(o => o.Votes);
+            
             return View(await results.ToListAsync());
         }
 
-        // GET: IdeaModels/Details/5
+        // GET: IdeaEntry/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,13 +47,13 @@ namespace IdeaManMVC.Controllers
             return View(await ideaEntry);
         }
 
-        // GET: IdeaModels/Create
+        // GET: IdeaEntry/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: IdeaModels/Create
+        // POST: IdeaEntry/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -75,7 +77,7 @@ namespace IdeaManMVC.Controllers
             return View(ideaEntry);
         }
 
-        // GET: IdeaModels/Edit/5
+        // GET: IdeaEntry/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,7 +97,7 @@ namespace IdeaManMVC.Controllers
             return View(ideaEntry);
         }
 
-        // POST: IdeaModels/Edit/5
+        // POST: IdeaEntry/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -111,7 +113,7 @@ namespace IdeaManMVC.Controllers
             return View(ideaEntry);
         }
 
-        // GET: IdeaModels/Delete/5
+        // GET: IdeaEntry/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,7 +128,7 @@ namespace IdeaManMVC.Controllers
             return View(ideaEntry);
         }
 
-        // POST: IdeaModels/Delete/5
+        // POST: IdeaEntry/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -137,24 +139,28 @@ namespace IdeaManMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        //IdeaEntry/DoVote
         [Authorize]
-        public JsonResult DoVote(int id)
+        [HttpPost]
+        public ActionResult DoVote(int id)
         {
-            var hasVote = appDb.Votes.Where(o => o.Idea.Id == id)
-                .Where(o=>o.User.Id == User.Identity.GetUserId())
-                .Any();
+            var userId = User.Identity.GetUserId();
+            var hasVote = appDb.Votes
+                .Where(o=>o.Idea.Id == id)
+                .Any(o => o.User.Id == userId);
             if(hasVote)
             {
-                return Json(new { status = "error", message="You have already voted for this."}); 
+                this.Response.StatusCode = 403;
+                return Json(new { result = "error", message="You have already voted for this."}); 
             }
             appDb.Votes.Add(new Vote()
             {
-                User = appDb.AppUsers.Find(User.Identity.GetUserId()),
-                Idea = appDb.Ideas.Find(id)
+                    User = appDb.AppUsers.Find(userId),
+                    Idea = appDb.Ideas.Find(id)
             });
-            appDb.SaveChangesAsync();
-            return Json(new { status = "OK", message="Vote casted"});
+            
+            appDb.SaveChanges();
+            return Json(new { result = "OK", message="Vote casted"} );
         }
 
         protected override void Dispose(bool disposing)
