@@ -125,6 +125,11 @@ namespace IdeaManMVC.Controllers
             {
                 return HttpNotFound();
             }
+            if (ideaEntry.Creator.Id != User.Identity.GetUserId())
+            {
+                ViewBag.Error = "Permission denied. This idea does not belong to you";
+                return RedirectToAction("Details", new { @id = id });
+            }
             return View(ideaEntry);
         }
 
@@ -133,7 +138,8 @@ namespace IdeaManMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            IdeaEntry ideaEntry = await appDb.Ideas.FindAsync(id);
+            IdeaEntry ideaEntry = appDb.Ideas.Find(id);
+            appDb.Votes.RemoveRange(appDb.Votes.Where(o => o.Idea.Id == ideaEntry.Id));
             appDb.Ideas.Remove(ideaEntry);
             await appDb.SaveChangesAsync();
             return RedirectToAction("Index");
