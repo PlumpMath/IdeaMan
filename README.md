@@ -10,4 +10,8 @@ After that, rerun the command and confirm that the version printed corresponds t
 
 `<add name="DefaultConnection" connectionString="Data Source=(LocalDb)\v11.0; ... />` 
 
-After that just run the project and you are good to go! :clap:
+After that following the next order in Visual Studio:
+ - Build -> Build Solution
+ - In the upper right, type `nuget console` to open the *Packet Manager Console*
+ - In the package manager console type `Update-Database`
+ - You are good to go!
