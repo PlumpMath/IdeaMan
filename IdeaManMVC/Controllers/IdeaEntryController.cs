@@ -30,7 +30,8 @@ namespace IdeaManMVC.Controllers
         // GET: IdeaEntry
         public async Task<ActionResult> Index()
         {
-            var results = appDb.Ideas.OrderByDescending(idea => idea.DateCreated)
+            var results = appDb.Ideas.OrderByDescending(idea => idea.Votes.Count)
+                .ThenByDescending(o=> o.DateCreated)
                 .Include(o => o.Votes);
             
             return View(await results.ToListAsync());
