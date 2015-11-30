@@ -30,7 +30,7 @@ namespace IdeaManMVC.Controllers
         // GET: IdeaEntry
         public async Task<ActionResult> Index()
         {
-            var results = appDb.Ideas.OrderByDescending(idea => idea.DateCreated)
+            var results = appDb.Ideas.OrderByDescending(idea => idea.Votes.Count).ThenByDescending(idea => idea.DateCreated)
                 .Include(o => o.Votes);
             
             return View(await results.ToListAsync());
@@ -80,6 +80,7 @@ namespace IdeaManMVC.Controllers
         // GET: IdeaEntry/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
