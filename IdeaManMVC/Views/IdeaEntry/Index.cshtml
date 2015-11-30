@@ -29,9 +29,9 @@
                         <div class="row">
                             <div class="col-xs-12 col-md-8">
                                 <h4 class="panel-title">@Html.DisplayFor(m => item.Title)</h4>
-                            </div>
-                            <div class="input-group col-xs-6 col-md-4">
-                                <input class="form-control input-sm" id=@($"vote{@item.Id}") readonly value="@item.Votes.Count"/>
+                            </div>                      
+                            <div class="input-group col-xs-8 col-md-4">
+                                <input class="form-control input-sm" id=@($"vote{@item.Id}")  value="Number of votes : @item.Votes.Count"/>
                                 <div class="input-group-btn">
                                     @Ajax.RawActionLink(" ", "DoVote", "IdeaEntry", new
                                     {
@@ -61,7 +61,7 @@
                                         @Html.DisplayFor(m => item.Creator.FullName)
                                     </p>
                                     <p style="float: right">
-                                        @Html.DisplayFor(m => item.UserCreated)
+                                        @Html.DisplayFor(m => item.DateCreated)
                                     </p>
                                 </div>
                             </div>
