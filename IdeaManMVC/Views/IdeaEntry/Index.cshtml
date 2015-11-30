@@ -32,11 +32,11 @@
                             </div>                      
                             <div class="col-xs-8 col-md-4">
                                 <div class="form-control input-group form-inline" style="border:0">
-                                    <span class="input-group-addon">Number of votes</span>
-                                    <input class="form-control input-sm"  id=@($"vote{@item.Id}") value="@item.Votes.Count" />
+                                    <span class="input-group-addon" >Number of votes</span>
+                                    <input class="form-control input-sm" style="text-align:right"  id=@($"vote{@item.Id}") value="@item.Votes.Count" />
 
                                     <span class="input-group-btn">
-                                        @Ajax.RawActionLink(" ", "DoVote", "IdeaEntry", new
+                                        @Ajax.RawActionLink(" Vote", "DoVote", "IdeaEntry", new
                                         {
                                             id = @item.Id
                                         },
