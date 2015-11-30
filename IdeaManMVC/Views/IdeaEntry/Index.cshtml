@@ -33,14 +33,18 @@
         @(counter == 1? Html.Raw("<div class='row'>") : Html.Raw(""))
         <div class="col-sm-4">
             <div class="panel panel-default">
+                <div class="panel-heading">
+                    @Html.ActionLink("Read more", "Details", new {id = item.Id}, new { @class="pull-right"} )
+                    <h4>@item.Title</h4>
+                </div>
                 <div class="panel-body">
-                    <p class="lead">@item.Title</p>
+
                     <p style="margin-bottom: 10px">
                         @item.ShortDescription
                     </p>
-                    <div>
-                        @Html.ActionLink("More", "Details", new {id = item.Id}, new {@class = "btn btn-primary"})
-                        <p class="pull-right">
+                    <hr/>
+                    <div class="pull-right">
+                        <p>
                             <span id=@($"vote{@item.Id}")>@item.Votes.Count</span>
                             Votes @Ajax.RawActionLink("Vote!", "DoVote", "IdeaEntry", new
                                   {
@@ -58,6 +62,9 @@
                                       })
                         </p>
                     </div>
+                    @item.Creator.FullName
+                    <br />
+                    @item.DateCreated.Value.ToShortDateString()
                 </div>
             </div>
         </div>
