@@ -1,5 +1,11 @@
 ﻿@using IdeaManMVC.Extensions
 @model List<IdeaManMVC.Models.IdeaEntry>
+
+<script>
+    function updateValue(elemId) {
+        $(elemId).html(parseInt($(elemId).html(), 10) + 1);
+    }
+</script>
 <style>
     .list-group li { list-style: none; }
 
@@ -10,6 +16,7 @@
 </style>
 @{
     ViewBag.Title = "Ideas for Life";
+    var counter = 1;
 }
 <div class="text-center">
     <h2 class="">@ViewBag.Title</h2>
@@ -19,64 +26,92 @@
     </p>
 </div>
 <hr/>
-<div class="container">
-    <ul class="list-group">
-        @foreach (var item in Model)
+<div class="container" id="main">
+
+    @foreach (var item in Model)
+    {
+        @(counter == 1? Html.Raw("<div class='row'>") : Html.Raw(""))
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="lead">@item.Title</p>
+                    <p style="margin-bottom: 10px">
+                        @item.ShortDescription
+                    </p>
+                    <div>
+                        @Html.ActionLink("More", "Details", new {id = item.Id}, new {@class = "btn btn-primary"})
+                        <p class="pull-right">
+                            <span id=@($"vote{@item.Id}")>@item.Votes.Count</span>
+                            Votes @Ajax.RawActionLink("Vote!", "DoVote", "IdeaEntry", new
+                                  {
+                                      id = @item.Id
+                                  },
+                                      new AjaxOptions
+                                      {
+                                          HttpMethod = "POST",
+                                          OnSuccess = string.Format("updateValue(\"#vote{0}\")", @item.Id),
+                                          OnFailure = ""
+                                      },
+                                      new
+                                      {
+                                          @class = "btn btn-default",
+                                      })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @(counter == 3 ? Html.Raw("</div>") : Html.Raw(""))
+        counter++;  
+        if (counter > 3)
         {
-            <li>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-12 col-md-8">
-                                <h4 class="panel-title">@Html.DisplayFor(m => item.Title)</h4>
-                            </div>                      
-                            <div class="col-xs-8 col-md-4">
-                                <div class="form-control input-group form-inline" style="border:0">
-                                    <span class="input-group-addon" >Number of votes</span>
-                                    <input class="form-control input-sm" style="text-align:right"  id=@($"vote{@item.Id}") value="@item.Votes.Count" />
-
-                                    <span class="input-group-btn">
-                                        @Ajax.RawActionLink(" Vote", "DoVote", "IdeaEntry", new
-                                        {
-                                            id = @item.Id
-                                        },
-                                             new AjaxOptions
-                                             {
-                                                 HttpMethod = "POST",
-                                                 OnSuccess = string.Format("$(\"#vote{0}\").get(0).value++", @item.Id),
-                                                 OnFailure = ""
-                                             },
-                                             new
-                                             {
-                                                 @class = "btn btn-default glyphicon glyphicon-thumbs-up",
-                                                 @style="height:29px",
-                                             })
-                                        
-                                    </span>
-                                    @Html.ActionLink("Read more", "Details", new { id = item.Id }, new { @class = "btn" })
+            counter = 1;
+        }
+    }
+</div><!--/main-->
+@*<!--
+    <div class="container">
+        <ul class="list-group">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-8 col-lg-9">
+                                    <h4 class="panel-title">@Html.DisplayFor(m => item.Title)</h4>
                                 </div>
-                                   
+                                <div class="colx-xs-8 col-md-4 col-lg-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1">Number of votes</span>
+                                        <input class="form-control" id=@($"vote{@item.Id}") readonly value="@item.Votes.Count" />
+                                        <span class="input-group-btn">
+
+                                        </span>
+                                    </div>
                                 </div>
-
-                        </div>
-                        <div>
-                            <hr />
-                            <div class="panel-info">
-
-                                <p>@Html.DisplayFor(m => item.ShortDescription)</p>
-                                <div class="panel-footer footer-padding">
-                                    <p style="float: left">
-                                        @Html.DisplayFor(m => item.Creator.FullName)
-                                    </p>
-                                    <p style="float: right">
-                                        @Html.DisplayFor(m => item.DateCreated)
-                                    </p>
+                            </div>
+                            <div>
+                                <hr />
+                                <div class="panel-info">
+                                    <p style="margin: 10px">@Html.DisplayFor(m => item.ShortDescription)</p>
+                                    @Html.ActionLink("Read more", "Details", new {id = item.Id}, new {@class = "btn btn-default", @style="margin:5px"})
+                                    <div class="panel-footer footer-padding">
+                                        <p style="float: left">
+                                            @Html.DisplayFor(m => item.Creator.FullName)
+                                        </p>
+                                        <p style="float: right">
+                                            @Html.DisplayFor(m => item.DateCreated)
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
+                </li>
+            }
+        </ul>
+    </div>
+        -->
+
+*@
