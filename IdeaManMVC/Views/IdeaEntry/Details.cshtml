@@ -34,13 +34,19 @@
         <dd>
             @Html.DisplayFor(model => model.FullText)
         </dd>
-
+        <dt>
+            Total Votes Obtained:            
+        </dt>
+        <dd>
+            @Model.Votes.Count
+        </dd>
     </dl>
 </div>
+
 <div class="btn-group">
     @if (Model.Creator.Id == User.Identity.GetUserId() || User.IsInRole("Moderator"))
     {
-        
+       
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"})
         
         @Html.ActionLink("Delete", "Delete", new { id = Model.Id}, new { @class="btn btn-danger" } )
