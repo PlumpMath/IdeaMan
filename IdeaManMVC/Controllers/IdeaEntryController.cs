@@ -126,7 +126,7 @@ namespace IdeaManMVC.Controllers
             {
                 return HttpNotFound();
             }
-            if (ideaEntry.Creator.Id != User.Identity.GetUserId())
+            if (ideaEntry.Creator.Id != User.Identity.GetUserId() && !User.IsInRole("Moderator"))
             {
                 ViewBag.Error = "Permission denied. This idea does not belong to you";
                 return RedirectToAction("Details", new { @id = id });

@@ -38,7 +38,7 @@
     </dl>
 </div>
 <div class="btn-group">
-    @if (Model.Creator.Id == User.Identity.GetUserId())
+    @if (Model.Creator.Id == User.Identity.GetUserId() || User.IsInRole("Moderator"))
     {
         
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"})

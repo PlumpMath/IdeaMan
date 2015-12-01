@@ -109,7 +109,7 @@ namespace IdeaManMVC.Migrations
                 "Aleen Seal",
                 "Simonne Steptoe",
                 "Mallory Axelson",
-                "Patrice Gadberry"
+                "Patrice Gadberry",
             };
             UserManager<ApplicationUser> manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
             foreach (var name in namesList)
@@ -131,6 +131,7 @@ namespace IdeaManMVC.Migrations
                 UserName = "admin@agile.com"
                 
             }, "123456");
+            
         }
     }
 }
