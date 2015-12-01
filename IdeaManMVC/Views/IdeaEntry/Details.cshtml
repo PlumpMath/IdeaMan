@@ -38,13 +38,14 @@
     </dl>
 </div>
 <div class="btn-group">
-    @if (Model.Creator.Id == User.Identity.GetUserId() || User.IsInRole("Moderator"))
-    {
-        
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"})
-        
+    @if (Model.Creator.Id == User.Identity.GetUserId())
+    {       
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"})   
         @Html.ActionLink("Delete", "Delete", new { id = Model.Id}, new { @class="btn btn-danger" } )
-        
+    }
+    else if(User.IsInRole("Moderator"))
+    {
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
     }
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" } )
 </div>
