@@ -187,6 +187,10 @@
     <Compile Include="Migrations\201511251909105_Votes.Designer.cs">
       <DependentUpon>201511251909105_Votes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512041220123_Required-Labels.cs" />
+    <Compile Include="Migrations\201512041220123_Required-Labels.Designer.cs">
+      <DependentUpon>201512041220123_Required-Labels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Ideas\BaseEntity.cs" />
@@ -221,6 +225,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\validator.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -282,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511251909105_Votes.resx">
       <DependentUpon>201511251909105_Votes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512041220123_Required-Labels.resx">
+      <DependentUpon>201512041220123_Required-Labels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

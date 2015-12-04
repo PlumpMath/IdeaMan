@@ -8,15 +8,10 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", data_toggle="validator" }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Use a local account to log in</h4>
-                <div class="alert alert-warning">
-                    <h5 class="warning">Default account is <strong>admin@agile.com</strong>, pass <strong>123456</strong></h5>
-                </div>
-                
-                <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
