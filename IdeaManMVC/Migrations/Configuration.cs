@@ -20,10 +20,13 @@ namespace IdeaManMVC.Migrations
         {
             using (UserManager<ApplicationUser> manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context)))
             {
-                if (manager.FindByEmail("admin@agile.com") != null) return;
+                if (manager.FindByEmail("admin@agile.com") != null
+                &&  manager.IsInRole(manager.FindByEmail("admin@agile.com").Id, "Moderator")
+                ) return;
             }
-            context.AppUsers.RemoveRange(context.AppUsers);
+            context.Votes.RemoveRange(context.Votes);
             context.Ideas.RemoveRange(context.Ideas);
+            context.AppUsers.RemoveRange(context.AppUsers);
             FillUsers(context);
             FillIdeas(context);
         }
@@ -123,15 +126,20 @@ namespace IdeaManMVC.Migrations
                 }, Guid.NewGuid().ToString().Substring(0, 10));
             }
 
-            var res = manager.Create(new ApplicationUser()
+            var adminUser = new ApplicationUser()
             {
                 FirstName = "Lev",
                 LastName = "Tolstoi",
                 Email = "admin@agile.com",
                 UserName = "admin@agile.com"
-                
-            }, "123456");
-            
+
+            };
+            var res = manager.Create(adminUser, "123456");
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            roleManager.Create(new IdentityRole("Moderator"));
+            manager.AddToRole(manager.FindByEmail("admin@agile.com").Id, "Moderator");
+
         }
     }
 }
