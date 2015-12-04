@@ -45,17 +45,9 @@
 </div>
 
 <div class="btn-group">
-<<<<<<< .merge_file_a11076
-    @if (Model.Creator.Id == User.Identity.GetUserId() || User.IsInRole("Moderator"))
-    {
-       
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"})
-        
-=======
     @if (Model.Creator.Id == User.Identity.GetUserId())
     {       
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"})   
->>>>>>> .merge_file_a11164
         @Html.ActionLink("Delete", "Delete", new { id = Model.Id}, new { @class="btn btn-danger" } )
     }
     else if(User.IsInRole("Moderator"))
