@@ -34,9 +34,16 @@
         <dd>
             @Html.DisplayFor(model => model.FullText)
         </dd>
-
+        </br>
+        <dt>
+            Total Votes Obtained            
+        </dt>
+        <dd>
+            @Model.Votes.Count
+        </dd>
     </dl>
 </div>
+
 <div class="btn-group">
     @if (Model.Creator.Id == User.Identity.GetUserId())
     {       
