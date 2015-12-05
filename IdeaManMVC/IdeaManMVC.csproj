@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdeaEntryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -271,6 +272,8 @@
     <Content Include="Views\IdeaEntry\Details.cshtml" />
     <Content Include="Views\IdeaEntry\Edit.cshtml" />
     <Content Include="Views\IdeaEntry\Index.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\CommentsForIdea.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

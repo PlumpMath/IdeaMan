@@ -1,0 +1,30 @@
+﻿@model IdeaManMVC.Models.IdeaEntry
+<div class="">
+    <p>
+        <h4 style="display:inline">@Model.Comments.Count() comments</h4>
+        @Html.ActionLink("Add new comment", "Create", "Comments",
+            new {@ideaId = Model.Id},
+            new {@class = "btn btn-success pull-right"})
+    </p>
+    <br/>
+    @if (Model.Comments.Any())
+    {
+        <div class="panel">
+            <table class="table">
+
+                @foreach (var item in Model.Comments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Text)
+                        </td>
+                        <td class="text-right" style="width: 150px">
+                            @Html.DisplayFor(modelItem => item.Author.FullName)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    }
+</div>

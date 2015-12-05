@@ -44,7 +44,10 @@ namespace IdeaManMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var ideaEntry = appDb.Ideas.Where(idea=>idea.Id == id).Include(o=>o.Votes)?.FirstOrDefaultAsync();
+            if (appDb.Ideas.Find(id) == null)
+                return RedirectToAction("Index", "IdeaEntry");
+            
+            var ideaEntry = appDb.Ideas.Where(idea=>idea.Id == id).Include(o=>o.Votes).Include(o=>o.Comments).FirstOrDefaultAsync();
             return View(await ideaEntry);
         }
 
