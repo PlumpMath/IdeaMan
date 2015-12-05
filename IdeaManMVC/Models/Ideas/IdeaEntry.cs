@@ -20,5 +20,6 @@ namespace IdeaManMVC.Models
         public string FullText { get; set; }
         public virtual ApplicationUser Creator { get; set; }
         public List<Vote> Votes { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

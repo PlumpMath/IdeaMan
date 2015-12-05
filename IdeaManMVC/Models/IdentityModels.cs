@@ -39,6 +39,7 @@ namespace IdeaManMVC.Models
         public DbSet<ApplicationUser> AppUsers { get; set; }
         public DbSet<IdeaEntry> Ideas { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public static ApplicationDbContext Create()
         {

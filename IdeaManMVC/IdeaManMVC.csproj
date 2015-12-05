@@ -191,9 +191,14 @@
     <Compile Include="Migrations\201512041220123_Required-Labels.Designer.cs">
       <DependentUpon>201512041220123_Required-Labels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512052036043_Added Comments.cs" />
+    <Compile Include="Migrations\201512052036043_Added Comments.Designer.cs">
+      <DependentUpon>201512052036043_Added Comments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Ideas\BaseEntity.cs" />
+    <Compile Include="Models\Ideas\Comment.cs" />
     <Compile Include="Models\Ideas\Vote.cs" />
     <Compile Include="Models\Ideas\IdeaEntry.cs" />
     <Compile Include="Models\Ideas\IdeaViewModels.cs" />
@@ -290,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512041220123_Required-Labels.resx">
       <DependentUpon>201512041220123_Required-Labels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512052036043_Added Comments.resx">
+      <DependentUpon>201512052036043_Added Comments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
