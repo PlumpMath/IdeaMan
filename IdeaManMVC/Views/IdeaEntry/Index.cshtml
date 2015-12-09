@@ -25,6 +25,16 @@
         @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-primary"})
     </p>
 </div>
+
+<div class="text-right"> 
+    Filter by Category: &nbsp; &nbsp; 
+  
+    @Html.ActionLink("All", "Index", "IdeaEntry")  | 
+    @Html.ActionLink("Health", "Index", "IdeaEntry")  |
+    @Html.ActionLink("IT", "Index", "IdeaEntry")  |
+    @Html.ActionLink("Entertainment", "Index", "IdeaEntry")  
+
+     </div>
 <hr/>
 <div class="container" id="main">
 
