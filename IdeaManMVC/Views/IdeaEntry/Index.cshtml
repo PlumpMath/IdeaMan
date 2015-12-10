@@ -55,13 +55,18 @@
                         {
                             case "Health":
                                 lblColor = "success";
-                            break;
+                                break;
                             case "IT":
                                 lblColor = "warning";
-                            break;
+                                break;
                             case "Entertainment":
                                 lblColor = "info";
-                            break;
+                                break;
+                        }
+                        var isVoted = false;
+                        if (item.Votes == null)
+                        {
+                            isVoted = item.Votes.Any(o => o.User.Id == User.Identity.GetUserId());
                         }
                     }
                     <span class="label label-@lblColor pull-right">@item.Category</span>  @Html.ActionLink("Read more", "Details", new {id = item.Id}, new {@class = ""})
@@ -91,7 +96,7 @@
                                       },
                                       new
                                       {
-                                          @class = "btn btn-default " + (@item.Votes.Any(o=>o.User.Id == User.Identity.GetUserId())?"hidden": ""),
+                                          @class = "btn btn-default " + ((isVoted)?"hidden": ""),
                                           @id="votebtn"+@item.Id
                                       })
                         </p>
