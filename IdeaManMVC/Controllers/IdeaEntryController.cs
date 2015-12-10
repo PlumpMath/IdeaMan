@@ -159,10 +159,10 @@ namespace IdeaManMVC.Controllers
             var userId = User.Identity.GetUserId();
             var hasVote = appDb.Votes
                 .Where(o=>o.Idea.Id == id)
-                .Any(o => o.User.Id == userId);
+                .Any(o => o.User != null && o.User.Id == userId);
             if(hasVote)
             {
-                this.Response.StatusCode = 403;
+                this.Response.StatusCodes = 403;
                 return Json(new { result = "error", message="You have already voted for this."}); 
             }
             appDb.Votes.Add(new Vote()
