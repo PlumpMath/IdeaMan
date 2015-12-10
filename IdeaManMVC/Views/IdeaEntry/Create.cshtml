@@ -40,14 +40,13 @@
         </div>
 
         <div class="form-group">
-            <select name="OS">
-                <option value="1">Entertainment</option>
-                <option value="2">IT</option>
-                <option value="3">Health</option>
-
-            </select>
+            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                <select name="Category">
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="IT">IT</option>
+                    <option value="Health">Health</option>
+                </select>
             </div>
         </div>
 

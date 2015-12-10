@@ -41,6 +41,17 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="Category">
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="IT">IT</option>
+                    <option value="Health">Health</option>
+                </select>
+            </div>
+        </div>
+
         <div class="col-md-offset-2 col-md-10">
         <div class="btn-group">
             

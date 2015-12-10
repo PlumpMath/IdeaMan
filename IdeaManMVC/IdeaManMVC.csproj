@@ -196,6 +196,10 @@
     <Compile Include="Migrations\201512052036043_Added Comments.Designer.cs">
       <DependentUpon>201512052036043_Added Comments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512101038118_Category.cs" />
+    <Compile Include="Migrations\201512101038118_Category.Designer.cs">
+      <DependentUpon>201512101038118_Category.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Ideas\BaseEntity.cs" />
@@ -301,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512052036043_Added Comments.resx">
       <DependentUpon>201512052036043_Added Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512101038118_Category.resx">
+      <DependentUpon>201512101038118_Category.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -62,7 +62,7 @@ namespace IdeaManMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaEntry ideaEntry)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,FullText,Category")] IdeaEntry ideaEntry)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +106,7 @@ namespace IdeaManMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaEntry ideaEntry)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,FullText,Category")] IdeaEntry ideaEntry)
         {
             if (ModelState.IsValid)
             {
