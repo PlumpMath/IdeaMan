@@ -162,7 +162,7 @@ namespace IdeaManMVC.Controllers
                 .Any(o => o.User != null && o.User.Id == userId);
             if(hasVote)
             {
-                this.Response.StatusCodes = 403;
+                Response.StatusCode = 403;
                 return Json(new { result = "error", message="You have already voted for this."}); 
             }
             appDb.Votes.Add(new Vote()
