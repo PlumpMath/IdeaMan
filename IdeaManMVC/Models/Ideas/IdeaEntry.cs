@@ -21,5 +21,6 @@ namespace IdeaManMVC.Models
         public virtual ApplicationUser Creator { get; set; }
         public List<Vote> Votes { get; set; }
         public List<Comment> Comments { get; set; }
+        public string Category { get; set; }
     }
 }
