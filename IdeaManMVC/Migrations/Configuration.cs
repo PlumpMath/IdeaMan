@@ -18,10 +18,13 @@ namespace IdeaManMVC.Migrations
 
         protected override void Seed(IdeaManMVC.Models.ApplicationDbContext context)
         {
+            bool forcedReseed = true;
             using (UserManager<ApplicationUser> manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context)))
             {
                 if (manager.FindByEmail("admin@agile.com") != null
                 &&  manager.IsInRole(manager.FindByEmail("admin@agile.com").Id, "Moderator")
+                &&  String.IsNullOrEmpty(context.Ideas.First().Category)
+                &&  !forcedReseed
                 ) return;
             }
             context.Votes.RemoveRange(context.Votes);
@@ -87,13 +90,28 @@ namespace IdeaManMVC.Migrations
             {
                 var user = context.AppUsers.Local.Skip(rand.Next(0, maxLength - 1)).FirstOrDefault();
                 var newDate = DateTime.Now.Subtract(TimeSpan.FromDays(counter));
+                var category = "";
+                switch (rand.Next(0, 3))
+                {
+                    case 0:
+                        category = "Health";
+                        break;
+                    case 1:
+                        category = "IT";
+                        break;
+                    case 2:
+                        category = "Entertainment";
+                        break;
+                }
+
                 context.Ideas.Add(new IdeaEntry()
                 {
                     Creator = user,
                     Title = ideaTitles[counter],
                     ShortDescription = ideaStr,
                     FullText = ideaStr+ideaStr+ideaStr,
-                    DateCreated = newDate
+                    DateCreated = newDate,
+                    Category = category 
                 });
                 counter++;
             }

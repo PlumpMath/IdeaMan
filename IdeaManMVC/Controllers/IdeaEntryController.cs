@@ -28,9 +28,11 @@ namespace IdeaManMVC.Controllers
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
         }
         // GET: IdeaEntry
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string filterCat)
         {
-            var results = appDb.Ideas.OrderByDescending(idea => idea.Votes.Count)
+            var results = appDb.Ideas
+                .Where(o=>o.Category == filterCat || String.IsNullOrEmpty(filterCat))
+                .OrderByDescending(idea => idea.Votes.Count)
                 .ThenByDescending(o=> o.DateCreated)
                 .Include(o => o.Votes);
             
@@ -62,7 +64,7 @@ namespace IdeaManMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaEntry ideaEntry)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,FullText,Category")] IdeaEntry ideaEntry)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +108,7 @@ namespace IdeaManMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,FullText")] IdeaEntry ideaEntry)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,FullText,Category")] IdeaEntry ideaEntry)
         {
             if (ModelState.IsValid)
             {
