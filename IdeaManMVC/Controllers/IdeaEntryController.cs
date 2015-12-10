@@ -28,9 +28,11 @@ namespace IdeaManMVC.Controllers
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
         }
         // GET: IdeaEntry
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string filterCat)
         {
-            var results = appDb.Ideas.OrderByDescending(idea => idea.Votes.Count)
+            var results = appDb.Ideas
+                .Where(o=>o.Category == filterCat || String.IsNullOrEmpty(filterCat))
+                .OrderByDescending(idea => idea.Votes.Count)
                 .ThenByDescending(o=> o.DateCreated)
                 .Include(o => o.Votes);
             

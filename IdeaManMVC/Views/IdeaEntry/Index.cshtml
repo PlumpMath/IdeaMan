@@ -24,16 +24,20 @@
     <p>
         @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-primary"})
     </p>
+
+    <div class="btn-group">
+        <h5>Filter by Category: &nbsp; &nbsp; </h5>
+        @Html.ActionLink("All", "Index", "IdeaEntry", new { filterCat = "" }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Health", "Index", "IdeaEntry", new { filterCat = "Health" }, new { @class = "btn btn-success" })
+        @Html.ActionLink("IT", "Index", "IdeaEntry", new { filterCat = "IT" }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("Entertainment", "Index", "IdeaEntry", new { filterCat = "Entertainment" }, new { @class = "btn btn-info" })
+    </div>
 </div>
 
-<div class="text-right"> 
-    Filter by Category: &nbsp; &nbsp; 
-  
-    @Html.ActionLink("All", "Index", "IdeaEntry")  | 
-    @Html.ActionLink("Health", "Index", "IdeaEntry")  |
-    @Html.ActionLink("IT", "Index", "IdeaEntry")  |
-    @Html.ActionLink("Entertainment", "Index", "IdeaEntry")  
-
+<div class="text-right">
+        <div>
+            
+        </div>
      </div>
 <hr/>
 <div class="container" id="main">
@@ -44,15 +48,33 @@
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    @Html.ActionLink("Read more", "Details", new {id = item.Id}, new { @class="pull-right"} )
+                    @{
+                        var lblColor = "";
+                        switch (item.Category)
+                        {
+                            case "Health":
+                                lblColor = "success";
+                            break;
+                            case "IT":
+                                lblColor = "warning";
+                            break;
+                            case "Entertainment":
+                                lblColor = "info";
+                            break;
+                        }
+                    }
+                    <span class="label label-@lblColor pull-right">@item.Category</span>  @Html.ActionLink("Read more", "Details", new {id = item.Id}, new {@class = ""})
                     <h4>@item.Title</h4>
+
                 </div>
                 <div class="panel-body">
 
                     <p style="margin-bottom: 10px">
                         @item.ShortDescription
                     </p>
+                    
                     <hr/>
+
                     <div class="pull-right">
                         <p>
                             <span id=@($"vote{@item.Id}")>@item.Votes.Count</span>
@@ -71,12 +93,12 @@
                                           @class = "btn btn-default",
                                       })
                         </p>
+
                     </div>
                     @item.Creator.FullName
-                    <br />
-                    @item.Category
-                    <br />
+                    <br/>
                     @item.DateCreated.Value.ToShortDateString()
+                    
                 </div>
             </div>
         </div>
@@ -88,49 +110,3 @@
         }
     }
 </div><!--/main-->
-@*<!--
-    <div class="container">
-        <ul class="list-group">
-            @foreach (var item in Model)
-            {
-                <li>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-xs-4 col-md-8 col-lg-9">
-                                    <h4 class="panel-title">@Html.DisplayFor(m => item.Title)</h4>
-                                </div>
-                                <div class="colx-xs-8 col-md-4 col-lg-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon" id="basic-addon1">Number of votes</span>
-                                        <input class="form-control" id=@($"vote{@item.Id}") readonly value="@item.Votes.Count" />
-                                        <span class="input-group-btn">
-
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <hr />
-                                <div class="panel-info">
-                                    <p style="margin: 10px">@Html.DisplayFor(m => item.ShortDescription)</p>
-                                    @Html.ActionLink("Read more", "Details", new {id = item.Id}, new {@class = "btn btn-default", @style="margin:5px"})
-                                    <div class="panel-footer footer-padding">
-                                        <p style="float: left">
-                                            @Html.DisplayFor(m => item.Creator.FullName)
-                                        </p>
-                                        <p style="float: right">
-                                            @Html.DisplayFor(m => item.DateCreated)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            }
-        </ul>
-    </div>
-        -->
-
-*@
