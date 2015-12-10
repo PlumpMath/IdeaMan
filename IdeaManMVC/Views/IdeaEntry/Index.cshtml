@@ -1,4 +1,5 @@
 ﻿@using IdeaManMVC.Extensions
+@using Microsoft.AspNet.Identity;
 @model List<IdeaManMVC.Models.IdeaEntry>
 
 <script>
@@ -53,12 +54,13 @@
                                       new AjaxOptions
                                       {
                                           HttpMethod = "POST",
-                                          OnSuccess = string.Format("updateValue(\"#vote{0}\")", @item.Id),
+                                          OnSuccess = string.Format("updateValue(\"#vote{0}\"); $('#votebtn{0}').addClass('disabled'); ", @item.Id),
                                           OnFailure = ""
                                       },
                                       new
                                       {
-                                          @class = "btn btn-default",
+                                          @class = "btn btn-default " + (@item.Votes.Any(o=>o.User.Id == User.Identity.GetUserId())?"hidden": ""),
+                                          @id="votebtn"+@item.Id
                                       })
                         </p>
                     </div>
